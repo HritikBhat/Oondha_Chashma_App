@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Oondha Chashma</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="browse">Browse</string>
+    <string name="favourites">Favourites</string>
+    <string name="about_us">About Us</string>
+</resources>
