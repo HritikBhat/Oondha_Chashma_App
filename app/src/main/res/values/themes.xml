@@ -43,4 +43,9 @@
         <item name="android:src">@drawable/ic_options</item>
     </style>
 
+    <style name="Widget.Button" parent="android:Widget">
+        <item name="android:backgroundTint">@color/dark_blue</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
 </resources>

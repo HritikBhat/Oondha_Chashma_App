@@ -1,34 +1,39 @@
 package com.hritik.oondhachashma.Fragments;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hritik.oondhachashma.Adapters.FavStoryAdapter;
+import com.hritik.oondhachashma.Adapters.StoryAdapter;
+import com.hritik.oondhachashma.Database.DBInterface;
+import com.hritik.oondhachashma.Database.TMKOCDatabase;
+import com.hritik.oondhachashma.Database.Tables.Favorites;
+import com.hritik.oondhachashma.Model.Story;
 import com.hritik.oondhachashma.R;
+import com.hritik.oondhachashma.Assets.StoryData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FavouritesFragment extends Fragment {
 
-    public static void watchYoutubeVideo(Context context, String id){
-        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
-        Intent webIntent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("http://www.youtube.com/watch?v=" + id));
-        try {
-            context.startActivity(appIntent);
-        } catch (ActivityNotFoundException ex) {
-            context.startActivity(webIntent);
-        }
-    }
+    RecyclerView recyclerView;
+    FavStoryAdapter storyAdapter;
+    List<Favorites> favoritesList;
+    DBInterface dbInterface;
+    TMKOCDatabase myAppDatabase;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,5 +46,26 @@ public class FavouritesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Context context = getActivity();
+        assert context != null;
+        myAppDatabase = Room.databaseBuilder(context, TMKOCDatabase.class,"tmkoc").allowMainThreadQueries().build();
+        dbInterface =myAppDatabase.myDao();
+
+        favoritesList=dbInterface.getFavorites();
+
+
+        recyclerView = view.findViewById(R.id.favorite_rc);
+        storyAdapter = new FavStoryAdapter(context,favoritesList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(storyAdapter);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        favoritesList=dbInterface.getFavorites();
+        storyAdapter = new FavStoryAdapter(getActivity(),favoritesList);
+        recyclerView.setAdapter(storyAdapter);
     }
 }
