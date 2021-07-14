@@ -24,15 +24,7 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
 
 
-    public static void watchYoutubeVideo(Context context, String id){
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://" + id));
 
-        try {
-            context.startActivity(intent);
-        } catch (ActivityNotFoundException ex) {
-            context.startActivity(intent);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(createCardAdapter());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+
 
         // using toolbar as ActionBar
         setSupportActionBar(toolbar);
@@ -61,28 +54,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).attach();
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) { switch(item.getItemId()) {
-        case R.id.search:
-            //add the function to perform here
-            return(true);
-        case R.id.aboutUs:
-            watchYoutubeVideo(getApplicationContext(),"5_zRun2jd2M");
-            return(true);
-
-    }
-        return(super.onOptionsItemSelected(item));
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.toolbarbtnsmenu, menu);
-        return true;
-    }
-
 
 
 

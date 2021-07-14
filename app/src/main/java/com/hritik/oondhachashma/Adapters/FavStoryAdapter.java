@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
+import com.hritik.oondhachashma.Activities.EpisodesActivity;
 import com.hritik.oondhachashma.Database.DBInterface;
 import com.hritik.oondhachashma.Database.TMKOCDatabase;
 import com.hritik.oondhachashma.Database.Tables.Favorites;
@@ -82,7 +83,10 @@ public class FavStoryAdapter extends RecyclerView.Adapter<FavStoryAdapter.ViewHo
         holder.st_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                watchYoutubeVideo(context,content.getEvidid());
+                Intent intent = new Intent(context.getApplicationContext(), EpisodesActivity.class);
+                intent.putExtra("sid",content.getSid());
+                intent.putExtra("sname",content.getSname());
+                context.startActivity(intent);
             }
         });
 

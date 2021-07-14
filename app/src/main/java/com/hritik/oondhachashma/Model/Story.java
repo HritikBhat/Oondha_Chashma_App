@@ -1,12 +1,15 @@
 package com.hritik.oondhachashma.Model;
 
+import java.util.ArrayList;
+
 public class Story {
     private int fid;
     private final int sid;
-    private final String sname,evidid,url;
+    private final String sname,url;
+    private ArrayList<String> evidid;
     private Boolean isFav;
 
-    public Story(int sid, String sname, String url,String evidid) {
+    public Story(int sid, String sname, String url,ArrayList<String> evidid) {
         this.sid = sid;
         this.url = url;
         this.sname = sname;
@@ -42,7 +45,7 @@ public class Story {
         return sname;
     }
 
-    public String getEvidid() {
+    public ArrayList<String> getEvidid() {
         return evidid;
     }
 }

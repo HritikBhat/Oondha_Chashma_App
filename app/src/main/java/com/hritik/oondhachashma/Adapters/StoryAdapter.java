@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
+import com.hritik.oondhachashma.Activities.EpisodesActivity;
 import com.hritik.oondhachashma.Database.DBInterface;
 import com.hritik.oondhachashma.Database.TMKOCDatabase;
 import com.hritik.oondhachashma.Database.Tables.Favorites;
@@ -37,17 +38,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
     Context context;
     DBInterface dbInterface;
     TMKOCDatabase myAppDatabase;
-
-    public static void watchYoutubeVideo(Context context, String id){
-        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
-        Intent webIntent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("http://www.youtube.com/watch?v=" + id));
-        try {
-            context.startActivity(appIntent);
-        } catch (ActivityNotFoundException ex) {
-            context.startActivity(webIntent);
-        }
-    }
 
     // RecyclerView recyclerView;
     public StoryAdapter(Context context,ArrayList<Story> cList) {
@@ -106,7 +96,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         holder.st_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                watchYoutubeVideo(context,content.getEvidid());
+                Intent intent = new Intent(context.getApplicationContext(), EpisodesActivity.class);
+                intent.putExtra("sid",String.valueOf(content.getSid()));
+                intent.putExtra("sname",String.valueOf(content.getSname()));
+                context.startActivity(intent);
             }
         });
 
@@ -126,7 +119,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
                     Favorites favorites = new Favorites();
                     favorites.setSid(String.valueOf(content.getSid()));
                     favorites.setSname(content.getSname());
-                    favorites.setEvidid(content.getEvidid());
                     favorites.setUrl(content.getUrl());
                     dbInterface.addFavorites(favorites);
                 }

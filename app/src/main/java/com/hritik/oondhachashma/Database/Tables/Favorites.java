@@ -21,9 +21,6 @@ public class Favorites
     @ColumnInfo(name = "sname")
     private String sname;
 
-    @ColumnInfo(name = "evidid")
-    private String evidid;
-
     @ColumnInfo(name = "url")
     private String url;
 
@@ -59,11 +56,4 @@ public class Favorites
         this.sname = sname;
     }
 
-    public String getEvidid() {
-        return evidid;
-    }
-
-    public void setEvidid(String evidid) {
-        this.evidid = evidid;
-    }
 }
