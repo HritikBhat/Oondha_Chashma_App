@@ -126,6 +126,21 @@ public class FavouritesFragment extends Fragment {
         searchBar = view.findViewById(R.id.searchBarFavEditText);
         searchBar.setAlpha(0f);
 
+        storyAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if (storyAdapter.getItemCount()<=0){
+                    emptyCL.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    emptyCL.setVisibility(View.INVISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
 
 
 
@@ -158,16 +173,5 @@ public class FavouritesFragment extends Fragment {
         favoritesList.addAll(dbInterface.getFavorites());
         storyAdapter.updateList(favoritesList);
         storyAdapter.notifyDataSetChanged();
-        if (favoritesList.size()>0){
-            emptyCL.setVisibility(View.INVISIBLE);
-            recyclerView.setVisibility(View.VISIBLE);
-
-        }
-        else {
-            emptyCL.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.INVISIBLE);
-        }
-
-
     }
 }

@@ -118,11 +118,15 @@ public class FavStoryAdapter extends RecyclerView.Adapter<FavStoryAdapter.ViewHo
                 dbInterface.deleteFav(content.getSid());
                 cListFiltered.remove(position);
                 notifyDataSetChanged();
+                checkSize();
             }
         });
+    }
 
+    public void checkSize(){
+        if(getItemCount()<=0){
 
-
+        }
     }
 
     public void updateList(ArrayList<Favorites> list){
