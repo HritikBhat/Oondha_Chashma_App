@@ -51,7 +51,7 @@ public class FavStoryAdapter extends RecyclerView.Adapter<FavStoryAdapter.ViewHo
         this.context= context;
         myAppDatabase = Room.databaseBuilder(context, TMKOCDatabase.class,"tmkoc").allowMainThreadQueries().build();
         dbInterface =myAppDatabase.myDao();
-        Log.i("Array check",""+cList.size());
+        //Log.i("Array check",""+cList.size());
     }
 
     @Override

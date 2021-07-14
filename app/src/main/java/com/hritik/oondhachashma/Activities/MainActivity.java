@@ -1,23 +1,22 @@
 package com.hritik.oondhachashma.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
-
-import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.hritik.oondhachashma.R;
+import com.hritik.oondhachashma.AboutUsActivity;
 import com.hritik.oondhachashma.Adapters.ViewPagerAdapter;
+import com.hritik.oondhachashma.R;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager2 viewPager;
@@ -55,6 +54,23 @@ public class MainActivity extends AppCompatActivity {
                 }).attach();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
+        // If you don't have res/menu, just create a directory named "menu" inside res
+        getMenuInflater().inflate(R.menu.toolbarbtnsmenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.aboutUs){
+            startActivity(new Intent(getApplicationContext(), AboutUsActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
     private ViewPagerAdapter createCardAdapter() {

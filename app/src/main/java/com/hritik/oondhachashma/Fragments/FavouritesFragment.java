@@ -1,5 +1,7 @@
 package com.hritik.oondhachashma.Fragments;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -10,12 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.hritik.oondhachashma.Adapters.FavStoryAdapter;
@@ -38,6 +43,19 @@ public class FavouritesFragment extends Fragment {
     List<Favorites> favoritesList;
     DBInterface dbInterface;
     TMKOCDatabase myAppDatabase;
+    EditText searchBar;
+    boolean isSearchVisible=false;
+
+    void filter(String text){
+        ArrayList<Favorites> temp = new ArrayList();
+        for(Favorites d: favoritesList){
+            if(d.getSname().contains(text)){
+                temp.add(d);
+            }
+        }
+        //update recyclerview
+        storyAdapter.updateList(temp);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,16 +70,31 @@ public class FavouritesFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.toolbarbtnsmenu, menu);
+
+    void animateView(View view,float alpha,float yValues){
+        ObjectAnimator move=ObjectAnimator.ofFloat(view, "translationY",yValues);
+        move.setDuration(2500);
+        ObjectAnimator alpha1=ObjectAnimator.ofFloat(view, "alpha",alpha);
+        alpha1.setDuration(1000);
+        AnimatorSet animatorSet =new AnimatorSet();
+        animatorSet.play(alpha1).with(move);
+        animatorSet.start();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.search){
-            Toast.makeText(getActivity(),"Favorite Search",Toast.LENGTH_LONG).show();
+            if (isSearchVisible){
+                //searchBar.setVisibility(View.INVISIBLE);
+                animateView(searchBar,0f,-20f);
+                isSearchVisible=false;
+            }
+            else {
+                //searchBar.setVisibility(View.VISIBLE);
+                animateView(searchBar,1f,20f);
+                isSearchVisible=true;
+            }
             return true;
         }
 
@@ -78,6 +111,9 @@ public class FavouritesFragment extends Fragment {
 
         favoritesList=dbInterface.getFavorites();
 
+        searchBar = (EditText) view.findViewById(R.id.searchBarFavEditText);
+        searchBar.setAlpha(0f);
+
 
         recyclerView = view.findViewById(R.id.favorite_rc);
         storyAdapter = new FavStoryAdapter(context,favoritesList);
@@ -85,6 +121,26 @@ public class FavouritesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(storyAdapter);
 
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        });
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isSearchVisible=false;
+        searchBar.setAlpha(0f);
     }
 
     @Override

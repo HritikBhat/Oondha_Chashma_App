@@ -34,7 +34,7 @@ public class StoryData {
         epList.add("ngmhzEUVm6I");
         epList.add("Gvvi8yw1lg0");
         storiesDataList.add(new Story(2,"Water Tanker Episode",
-                "http://www.scrolldroll.com/wp-content/uploads/2020/08/champak-water-tank-meme.jpeg",epList));
+                "https://www.scrolldroll.com/wp-content/uploads/2020/08/champak-water-tank-meme.jpeg",epList));
 
         epList = new ArrayList<>();
 
