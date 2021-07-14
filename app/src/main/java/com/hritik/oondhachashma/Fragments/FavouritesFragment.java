@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -40,11 +43,13 @@ public class FavouritesFragment extends Fragment {
 
     RecyclerView recyclerView;
     FavStoryAdapter storyAdapter;
-    List<Favorites> favoritesList;
+    ArrayList<Favorites> favoritesList;
     DBInterface dbInterface;
     TMKOCDatabase myAppDatabase;
     EditText searchBar;
     boolean isSearchVisible=false;
+    ConstraintLayout emptyCL;
+
 
     void filter(String text){
         ArrayList<Favorites> temp = new ArrayList();
@@ -109,17 +114,20 @@ public class FavouritesFragment extends Fragment {
         myAppDatabase = Room.databaseBuilder(context, TMKOCDatabase.class,"tmkoc").allowMainThreadQueries().build();
         dbInterface =myAppDatabase.myDao();
 
-        favoritesList=dbInterface.getFavorites();
-
-        searchBar = (EditText) view.findViewById(R.id.searchBarFavEditText);
-        searchBar.setAlpha(0f);
-
-
+        emptyCL= view.findViewById(R.id.emptyLayout);
+        emptyCL.setVisibility(View.INVISIBLE);
+        favoritesList=new ArrayList<>(dbInterface.getFavorites());
         recyclerView = view.findViewById(R.id.favorite_rc);
         storyAdapter = new FavStoryAdapter(context,favoritesList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(storyAdapter);
+
+        searchBar = view.findViewById(R.id.searchBarFavEditText);
+        searchBar.setAlpha(0f);
+
+
+
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -146,8 +154,20 @@ public class FavouritesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        favoritesList=dbInterface.getFavorites();
-        storyAdapter = new FavStoryAdapter(getActivity(),favoritesList);
-        recyclerView.setAdapter(storyAdapter);
+        favoritesList.clear();
+        favoritesList.addAll(dbInterface.getFavorites());
+        storyAdapter.updateList(favoritesList);
+        storyAdapter.notifyDataSetChanged();
+        if (favoritesList.size()>0){
+            emptyCL.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+
+        }
+        else {
+            emptyCL.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+        }
+
+
     }
 }

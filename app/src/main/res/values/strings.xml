@@ -6,4 +6,8 @@
     <string name="favourites">Favourites</string>
     <string name="about_us">About Us</string>
     <string name="watch">Watch</string>
+    <string name="app_description">The fan app is developed with the purpose of easy searching of the subplot of TMKOC and direct users to that youtube video.</string>
+    <string name="developerString">Designed and Developed by Hritik Bhat</string>
+    <string name="appIconString">Icon Designing by Laxman Shinde</string>
+    <string name="emptyString">No Favorites Are There</string>
 </resources>

@@ -3,9 +3,7 @@ package com.hritik.oondhachashma.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +12,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.hritik.oondhachashma.AboutUsActivity;
 import com.hritik.oondhachashma.Adapters.ViewPagerAdapter;
 import com.hritik.oondhachashma.R;
 

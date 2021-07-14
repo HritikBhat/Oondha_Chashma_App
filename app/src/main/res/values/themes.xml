@@ -16,7 +16,7 @@
 
     <style name="AppTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">?attr/colorAccent</item>
-        <item name="tabIndicatorHeight">1dp</item>
+        <item name="tabIndicatorHeight">2dp</item>
         <item name="tabPaddingStart">6dp</item>
         <item name="tabPaddingEnd">6dp</item>
         <item name="tabBackground">?attr/selectableItemBackground</item>

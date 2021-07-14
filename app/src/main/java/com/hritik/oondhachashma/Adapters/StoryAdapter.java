@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
@@ -13,8 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.hritik.oondhachashma.Activities.EpisodesActivity;
 import com.hritik.oondhachashma.Database.DBInterface;
 import com.hritik.oondhachashma.Database.TMKOCDatabase;
@@ -91,6 +98,21 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
                 .load(content.getUrl())
                 .centerCrop()
                 .override(300,200)
+                .listener(new RequestListener<Drawable>() {
+
+
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                        return false;
+                              }
+                          }
+                )
                 .into(holder.st_img);
 
         holder.st_btn.setOnClickListener(new View.OnClickListener() {
@@ -144,12 +166,14 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         public ImageView st_img;
         public Button st_btn;
         public ImageButton fav_btn;
+        public ProgressBar progressBar;
         public ViewHolder(View itemView) {
             super(itemView);
             this.name_tv = itemView.findViewById(R.id.epname);
             this.st_img = itemView.findViewById(R.id.storyImage);
             this.st_btn = itemView.findViewById(R.id.watchbtn);
             this.fav_btn = itemView.findViewById(R.id.favoriteBtn);
+            this.progressBar = itemView.findViewById(R.id.sloader);
         }
     }
 }

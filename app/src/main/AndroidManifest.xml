@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OondhaChashma">
-        <activity android:name=".AboutUsActivity"></activity>
+        <activity android:name=".Activities.AboutUsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hritik.oondhachashma.Activities.MainActivity" />
+        </activity>
         <activity android:name=".Activities.EpisodesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
