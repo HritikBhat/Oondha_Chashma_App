@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(createCardAdapter());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-
 
         // using toolbar as ActionBar
         setSupportActionBar(toolbar);
