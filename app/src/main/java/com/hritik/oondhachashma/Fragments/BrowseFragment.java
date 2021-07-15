@@ -42,7 +42,7 @@ public class BrowseFragment extends Fragment {
     void filter(String text){
         ArrayList<Story> temp = new ArrayList();
         for(Story d: stories){
-            if(d.getSname().contains(text)){
+            if(d.getSname().toLowerCase().contains(text.toLowerCase())){
                 temp.add(d);
             }
         }

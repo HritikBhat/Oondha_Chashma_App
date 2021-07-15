@@ -156,10 +156,10 @@ public class StoryData {
         return storiesDataList;
     }
 
-    public ArrayList<String> getStoryIndexAt(int sid){
+    public Story getStoryIndexAt(int sid){
         for (Story story: storiesDataList) {
             if (story.getSid()==sid){
-                return story.getEvidid();
+                return story;
             }
         }
         return null;

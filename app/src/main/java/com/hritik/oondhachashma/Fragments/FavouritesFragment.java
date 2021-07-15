@@ -54,7 +54,7 @@ public class FavouritesFragment extends Fragment {
     void filter(String text){
         ArrayList<Favorites> temp = new ArrayList();
         for(Favorites d: favoritesList){
-            if(d.getSname().contains(text)){
+            if(d.getSname().toLowerCase().contains(text.toLowerCase())){
                 temp.add(d);
             }
         }
